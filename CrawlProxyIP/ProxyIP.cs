@@ -50,6 +50,7 @@ namespace CrawlProxyIP
         public void GetIP_xicidaili()
         {
             Task taskMain = new Task(()=> {
+                Watch = new Stopwatch();
                 Watch.Start();
                 HttpHelper Http = new HttpHelper();
                 HttpItem Item = new HttpItem()
@@ -80,6 +81,8 @@ namespace CrawlProxyIP
         /// </summary>
         public void GetIP_zdaye()
         {
+            Watch = new Stopwatch();
+            Watch.Start();
             Task.Factory.StartNew(() =>
             {
                 HttpHelper http = new HttpHelper();
