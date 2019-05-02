@@ -28,20 +28,76 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.txtTest = new System.Windows.Forms.TextBox();
+            this.btnGetIP = new System.Windows.Forms.Button();
+            this.btnTest = new System.Windows.Forms.Button();
+            this.btnGetIP_zdaye = new System.Windows.Forms.Button();
             this.SuspendLayout();
+            // 
+            // txtTest
+            // 
+            this.txtTest.Location = new System.Drawing.Point(171, 12);
+            this.txtTest.Multiline = true;
+            this.txtTest.Name = "txtTest";
+            this.txtTest.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.txtTest.Size = new System.Drawing.Size(337, 426);
+            this.txtTest.TabIndex = 0;
+            // 
+            // btnGetIP
+            // 
+            this.btnGetIP.Location = new System.Drawing.Point(12, 12);
+            this.btnGetIP.Name = "btnGetIP";
+            this.btnGetIP.Size = new System.Drawing.Size(144, 23);
+            this.btnGetIP.TabIndex = 1;
+            this.btnGetIP.Text = "Get IP xicidaili";
+            this.btnGetIP.UseVisualStyleBackColor = true;
+            this.btnGetIP.Click += new System.EventHandler(this.btnGetIP_Click);
+            // 
+            // btnTest
+            // 
+            this.btnTest.Location = new System.Drawing.Point(12, 70);
+            this.btnTest.Name = "btnTest";
+            this.btnTest.Size = new System.Drawing.Size(144, 23);
+            this.btnTest.TabIndex = 2;
+            this.btnTest.Text = "Test";
+            this.btnTest.UseVisualStyleBackColor = true;
+            this.btnTest.Click += new System.EventHandler(this.btnTest_Click);
+            // 
+            // btnGetIP_zdaye
+            // 
+            this.btnGetIP_zdaye.Location = new System.Drawing.Point(12, 41);
+            this.btnGetIP_zdaye.Name = "btnGetIP_zdaye";
+            this.btnGetIP_zdaye.Size = new System.Drawing.Size(144, 23);
+            this.btnGetIP_zdaye.TabIndex = 3;
+            this.btnGetIP_zdaye.Text = "Get IP zdaye";
+            this.btnGetIP_zdaye.UseVisualStyleBackColor = true;
+            this.btnGetIP_zdaye.Click += new System.EventHandler(this.btnGetIP_zdaye_Click);
             // 
             // FrmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(520, 450);
+            this.Controls.Add(this.btnGetIP_zdaye);
+            this.Controls.Add(this.btnTest);
+            this.Controls.Add(this.btnGetIP);
+            this.Controls.Add(this.txtTest);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.MaximizeBox = false;
             this.Name = "FrmMain";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "抓取代理IP工具";
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
         #endregion
+
+        private System.Windows.Forms.TextBox txtTest;
+        private System.Windows.Forms.Button btnGetIP;
+        private System.Windows.Forms.Button btnTest;
+        private System.Windows.Forms.Button btnGetIP_zdaye;
     }
 }
 
