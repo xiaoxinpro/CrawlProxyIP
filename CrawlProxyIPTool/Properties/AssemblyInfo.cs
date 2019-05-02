@@ -5,13 +5,13 @@ using System.Runtime.InteropServices;
 // 有关程序集的一般信息由以下
 // 控制。更改这些特性值可修改
 // 与程序集关联的信息。
-[assembly: AssemblyTitle("CrawlProxyIPTool")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("Crawl Proxy IP Tool")]
+[assembly: AssemblyDescription("抓取代理IP地址工具")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Microsoft")]
-[assembly: AssemblyProduct("CrawlProxyIPTool")]
-[assembly: AssemblyCopyright("Copyright © Microsoft 2019")]
-[assembly: AssemblyTrademark("")]
+[assembly: AssemblyCompany("Chishin")]
+[assembly: AssemblyProduct("Crawl Proxy IP Tool")]
+[assembly: AssemblyCopyright("Copyright © Chishin 2019")]
+[assembly: AssemblyTrademark("Chishin")]
 [assembly: AssemblyCulture("")]
 
 // 将 ComVisible 设置为 false 会使此程序集中的类型
