@@ -24,6 +24,16 @@ namespace CrawlProxyIPTool
             proxyIP.EventGetIPDone += new ProxyIP.DelegateGetIPDone(GetIPDone);
             proxyIP.EventGetIPing += new ProxyIP.DelegateGetIPing(GetIPing);
             proxyIP.GetIP_xicidaili();
+            proxyIP.GetIP_zdaye();
+        }
+
+        private void btnGetIP_xicidaili_Click(object sender, EventArgs e)
+        {
+            txtTest.Clear();
+            ProxyIP proxyIP = new ProxyIP();
+            proxyIP.EventGetIPDone += new ProxyIP.DelegateGetIPDone(GetIPDone);
+            proxyIP.EventGetIPing += new ProxyIP.DelegateGetIPing(GetIPing);
+            proxyIP.GetIP_xicidaili();
         }
 
         private void btnGetIP_zdaye_Click(object sender, EventArgs e)
@@ -57,6 +67,5 @@ namespace CrawlProxyIPTool
             ProxyIP proxyIP = new ProxyIP();
             txtTest.Text = proxyIP.Test();
         }
-
     }
 }

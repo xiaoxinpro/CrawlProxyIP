@@ -29,9 +29,10 @@
         private void InitializeComponent()
         {
             this.txtTest = new System.Windows.Forms.TextBox();
-            this.btnGetIP = new System.Windows.Forms.Button();
+            this.btnGetIP_xicidaili = new System.Windows.Forms.Button();
             this.btnTest = new System.Windows.Forms.Button();
             this.btnGetIP_zdaye = new System.Windows.Forms.Button();
+            this.btnGetIP = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // txtTest
@@ -43,19 +44,19 @@
             this.txtTest.Size = new System.Drawing.Size(337, 426);
             this.txtTest.TabIndex = 0;
             // 
-            // btnGetIP
+            // btnGetIP_xicidaili
             // 
-            this.btnGetIP.Location = new System.Drawing.Point(12, 12);
-            this.btnGetIP.Name = "btnGetIP";
-            this.btnGetIP.Size = new System.Drawing.Size(144, 23);
-            this.btnGetIP.TabIndex = 1;
-            this.btnGetIP.Text = "Get IP xicidaili";
-            this.btnGetIP.UseVisualStyleBackColor = true;
-            this.btnGetIP.Click += new System.EventHandler(this.btnGetIP_Click);
+            this.btnGetIP_xicidaili.Location = new System.Drawing.Point(12, 64);
+            this.btnGetIP_xicidaili.Name = "btnGetIP_xicidaili";
+            this.btnGetIP_xicidaili.Size = new System.Drawing.Size(144, 23);
+            this.btnGetIP_xicidaili.TabIndex = 1;
+            this.btnGetIP_xicidaili.Text = "Get IP xicidaili";
+            this.btnGetIP_xicidaili.UseVisualStyleBackColor = true;
+            this.btnGetIP_xicidaili.Click += new System.EventHandler(this.btnGetIP_xicidaili_Click);
             // 
             // btnTest
             // 
-            this.btnTest.Location = new System.Drawing.Point(12, 70);
+            this.btnTest.Location = new System.Drawing.Point(12, 415);
             this.btnTest.Name = "btnTest";
             this.btnTest.Size = new System.Drawing.Size(144, 23);
             this.btnTest.TabIndex = 2;
@@ -65,7 +66,7 @@
             // 
             // btnGetIP_zdaye
             // 
-            this.btnGetIP_zdaye.Location = new System.Drawing.Point(12, 41);
+            this.btnGetIP_zdaye.Location = new System.Drawing.Point(12, 93);
             this.btnGetIP_zdaye.Name = "btnGetIP_zdaye";
             this.btnGetIP_zdaye.Size = new System.Drawing.Size(144, 23);
             this.btnGetIP_zdaye.TabIndex = 3;
@@ -73,14 +74,25 @@
             this.btnGetIP_zdaye.UseVisualStyleBackColor = true;
             this.btnGetIP_zdaye.Click += new System.EventHandler(this.btnGetIP_zdaye_Click);
             // 
+            // btnGetIP
+            // 
+            this.btnGetIP.Location = new System.Drawing.Point(12, 12);
+            this.btnGetIP.Name = "btnGetIP";
+            this.btnGetIP.Size = new System.Drawing.Size(144, 46);
+            this.btnGetIP.TabIndex = 3;
+            this.btnGetIP.Text = "Get IP All";
+            this.btnGetIP.UseVisualStyleBackColor = true;
+            this.btnGetIP.Click += new System.EventHandler(this.btnGetIP_Click);
+            // 
             // FrmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(520, 450);
+            this.Controls.Add(this.btnGetIP);
             this.Controls.Add(this.btnGetIP_zdaye);
             this.Controls.Add(this.btnTest);
-            this.Controls.Add(this.btnGetIP);
+            this.Controls.Add(this.btnGetIP_xicidaili);
             this.Controls.Add(this.txtTest);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
@@ -95,9 +107,10 @@
         #endregion
 
         private System.Windows.Forms.TextBox txtTest;
-        private System.Windows.Forms.Button btnGetIP;
+        private System.Windows.Forms.Button btnGetIP_xicidaili;
         private System.Windows.Forms.Button btnTest;
         private System.Windows.Forms.Button btnGetIP_zdaye;
+        private System.Windows.Forms.Button btnGetIP;
     }
 }
 
