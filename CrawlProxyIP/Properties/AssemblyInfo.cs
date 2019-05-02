@@ -6,12 +6,12 @@ using System.Runtime.InteropServices;
 // 控制。更改这些特性值可修改
 // 与程序集关联的信息。
 [assembly: AssemblyTitle("CrawlProxyIP")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("抓取代理IP地址类库")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Microsoft")]
-[assembly: AssemblyProduct("CrawlProxyIP")]
-[assembly: AssemblyCopyright("Copyright © Microsoft 2019")]
-[assembly: AssemblyTrademark("")]
+[assembly: AssemblyCompany("Chishin")]
+[assembly: AssemblyProduct("CrawlProxyIPLibrary")]
+[assembly: AssemblyCopyright("Copyright © Chishin 2019")]
+[assembly: AssemblyTrademark("Chishin")]
 [assembly: AssemblyCulture("")]
 
 // 将 ComVisible 设置为 false 会使此程序集中的类型
