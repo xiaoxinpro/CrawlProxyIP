@@ -19,15 +19,34 @@ namespace CrawlProxyIP
         public string strTest;
         #endregion
 
+        #region 属性
+        /// <summary>
+        /// 获取到IP是否校验后输出。
+        /// </summary>
+        public bool IsCheck { get; set; }
 
+        /// <summary>
+        /// 获取到的IP是否检测HTTPS，需要开启IsCheck才有效。
+        /// </summary>
+        public bool IsHTTPS { get; set; }
 
+        /// <summary>
+        /// 单个IP校验超时时间（毫秒），建议不要小于2000。
+        /// </summary>
+        public int CheckTimeout { get; set; }
+        #endregion
+
+        #region 构造函数
         /// <summary>
         /// 构造函数
         /// </summary>
         public ProxyIP()
         {
-
+            IsCheck = true;
+            IsHTTPS = true;
+            CheckTimeout = 5000;
         }
+        #endregion
 
         #region 获取结果委托事件
         /// <summary>
@@ -126,16 +145,29 @@ namespace CrawlProxyIP
         /// </summary>
         private void TaskRunCheckIP()
         {
-            /*方案一、创建大量任务(速度更快)*/
-            var tasks = new Task[QueueGetIP.Count];
-            for (int i = 0; i < tasks.Length; i++)
+            if (IsCheck)
             {
-                tasks[i] = Task.Factory.StartNew(() => CheckIP());
-            }
-            Task.WaitAll(tasks);
+                /*方案一、创建大量任务(速度更快)*/
+                var tasks = new Task[QueueGetIP.Count];
+                for (int i = 0; i < tasks.Length; i++)
+                {
+                    tasks[i] = Task.Factory.StartNew(() => CheckIP());
+                }
+                Task.WaitAll(tasks);
 
-            /*方案二、创建线程池Parallel*/
-            //Parallel.ForEach<string>(QueueGetIP.ToArray(), (dataIP) => CheckIP(dataIP));
+                /*方案二、创建线程池Parallel*/
+                //Parallel.ForEach<string>(QueueGetIP.ToArray(), (dataIP) => CheckIP(dataIP));
+            }
+            else
+            {
+                while (QueueGetIP.IsEmpty == false)
+                {
+                    if(QueueGetIP.TryDequeue(out string result))
+                    {
+                        EventGetIPing?.Invoke(result);
+                    }
+                }
+            }
         }
 
         /// <summary>
@@ -143,18 +175,12 @@ namespace CrawlProxyIP
         /// </summary>
         public void CheckIP()
         {
-            string dataIP;
             while (QueueGetIP.IsEmpty == false)
             {
-                while (QueueGetIP.TryDequeue(out dataIP) == false)
+                if (QueueGetIP.TryDequeue(out string dataIP))
                 {
-                    Thread.Sleep(1);
-                    if (QueueGetIP.IsEmpty)
-                    {
-                        return;
-                    }
+                    CheckIP(dataIP);
                 }
-                CheckIP(dataIP);
             }
         }
 
@@ -167,12 +193,15 @@ namespace CrawlProxyIP
             HttpHelper http = new HttpHelper();
             HttpItem item = new HttpItem()
             {
-                //URL = "http://ip-api.com/json/?lang=zh-CN",
-                URL = "https://pv.sohu.com/cityjson?ie=utf-8",
+                URL = "http://pv.sohu.com/cityjson?ie=utf-8", //HTTP网站 http://ip-api.com/json/?lang=zh-CN
                 Method = "get",
                 ProxyIp = dataIP,   //IP地址:端口
-                Timeout = 5000,     //超时毫秒数
+                Timeout = CheckTimeout,     //超时毫秒数
             };
+            if (IsHTTPS)
+            {
+                item.URL = "https://pv.sohu.com/cityjson?ie=utf-8"; //HTTPS网站
+            }
             HttpResult checkResult = http.GetHtml(item);
             if (checkResult.StatusCode == System.Net.HttpStatusCode.OK)
             {
