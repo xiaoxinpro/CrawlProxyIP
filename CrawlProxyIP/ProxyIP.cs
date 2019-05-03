@@ -12,9 +12,11 @@ namespace CrawlProxyIP
 {
     public class ProxyIP
     {
+        private List<string> ListProxyIP = new List<string>();
         private ConcurrentQueue<string> QueueGetIP = new ConcurrentQueue<string>();
         private ConcurrentQueue<string> QueueCheckIP = new ConcurrentQueue<string>();
         private Stopwatch Watch = new Stopwatch();
+        private bool IsRunGetIP = false;
         #region 全局变量
         public string strTest;
         #endregion
@@ -86,13 +88,13 @@ namespace CrawlProxyIP
                 {
                     QueueGetIP.Enqueue(Regex.Replace(match.Value, @"</td>\s*<td>", ":"));
                 }
-                Console.WriteLine("xicidaili获取到" + QueueGetIP.Count + "个IP地址，开始校验...");
+                Console.WriteLine("xicidaili获取到" + matches.Count + "个IP地址，开始校验...");
                 TaskRunCheckIP();
             
                 Watch.Stop();
                 Console.WriteLine("耗时：" + Watch.Elapsed.TotalSeconds);
 
-                EventGetIPDone?.Invoke(QueueCheckIP.ToArray());
+                EventGetIPDone?.Invoke(ListProxyIP.ToArray());
             });
             taskMain.Start();
         }
@@ -129,11 +131,11 @@ namespace CrawlProxyIP
                 {
                     QueueGetIP.Enqueue(match.Value);
                 }
-                Console.WriteLine("zdaye获取到" + QueueGetIP.Count + "个IP地址，开始校验...");
+                Console.WriteLine("zdaye获取到" + matches.Count + "个IP地址，开始校验...");
                 TaskRunCheckIP();
                 Watch.Stop();
                 Console.WriteLine("耗时：" + Watch.Elapsed.TotalSeconds);
-                EventGetIPDone?.Invoke(QueueCheckIP.ToArray());
+                EventGetIPDone?.Invoke(ListProxyIP.ToArray());
             });
         }
 
@@ -164,10 +166,14 @@ namespace CrawlProxyIP
                 {
                     if(QueueGetIP.TryDequeue(out string result))
                     {
+                        ListProxyIP.Add(result);
                         EventGetIPing?.Invoke(result);
                     }
                 }
             }
+
+            //List去重
+            ListProxyIP = ListProxyIP.Distinct().ToList();
         }
 
         /// <summary>
@@ -210,6 +216,7 @@ namespace CrawlProxyIP
                 {
                     if (dataIP.IndexOf(matchs[0].Value) == 0) //matchs[0].Value不包含端口号
                     {
+                        ListProxyIP.Add(dataIP);
                         QueueCheckIP.Enqueue(dataIP);
                         EventGetIPing?.Invoke(dataIP);
                     }
