@@ -64,6 +64,14 @@ namespace CrawlProxyIP
         /// <param name="arrDataIP"></param>
         public delegate void DelegateGetIPDone(string[] arrDataIP);
         public event DelegateGetIPDone EventGetIPDone;
+
+        /// <summary>
+        /// 获取IP过程产生的日志消息
+        /// </summary>
+        /// <param name="msg"></param>
+        public delegate void DelegateGetIPInfo(string msg, string status, DateTime startTime, DateTime endTime, double lenTime, string error);
+        public event DelegateGetIPInfo EventGetIPInfo;
+
         #endregion
 
         #region 代理获取函数
@@ -196,19 +204,24 @@ namespace CrawlProxyIP
         /// <param name="dataIP">IP地址:端口</param>
         public void CheckIP(string dataIP)
         {
+            DateTime startTime = DateTime.Now;
+            Stopwatch watchCheckIP = new Stopwatch();
+            watchCheckIP.Start();
             HttpHelper http = new HttpHelper();
             HttpItem item = new HttpItem()
             {
                 URL = "http://pv.sohu.com/cityjson?ie=utf-8", //HTTP网站 http://ip-api.com/json/?lang=zh-CN
                 Method = "get",
-                ProxyIp = dataIP,   //IP地址:端口
-                Timeout = CheckTimeout,     //超时毫秒数
+                ProxyIp = dataIP,                   //IP地址:端口
+                Timeout = CheckTimeout,             //超时毫秒数
+                ReadWriteTimeout = CheckTimeout,    //超时毫秒数
             };
             if (IsHTTPS)
             {
                 item.URL = "https://pv.sohu.com/cityjson?ie=utf-8"; //HTTPS网站
             }
             HttpResult checkResult = http.GetHtml(item);
+            watchCheckIP.Stop();
             if (checkResult.StatusCode == System.Net.HttpStatusCode.OK)
             {
                 MatchCollection matchs = Regex.Matches(checkResult.Html, @"(\d{1,3}\.){3}\d{1,3}");
@@ -219,10 +232,32 @@ namespace CrawlProxyIP
                         ListProxyIP.Add(dataIP);
                         QueueCheckIP.Enqueue(dataIP);
                         EventGetIPing?.Invoke(dataIP);
+                        EventGetIPInfo?.Invoke(dataIP, "OK", startTime, DateTime.Now, watchCheckIP.Elapsed.TotalSeconds,"");
                     }
                 }
             }
+            EventGetIPInfo?.Invoke(dataIP, "NG", startTime, DateTime.Now, watchCheckIP.Elapsed.TotalSeconds, checkResult.StatusDescription);
         }
+
+        //private void CallWithTimeout(Action action, int timeoutMilliseconds)
+        //{
+        //    Thread threadToKill = null;
+        //    Action wrappedAction = () =>
+        //    {
+        //        threadToKill = Thread.CurrentThread;
+        //        action();
+        //    };
+        //    IAsyncResult result = wrappedAction.BeginInvoke(null, null);
+        //    if (result.AsyncWaitHandle.WaitOne(timeoutMilliseconds))
+        //    {
+        //        wrappedAction.EndInvoke(result);
+        //    }
+        //    else
+        //    {
+        //        threadToKill.Abort();
+        //        //throw new TimeoutException();
+        //    }
+        //}
         #endregion
 
         /// <summary>
