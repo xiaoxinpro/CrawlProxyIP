@@ -19,6 +19,8 @@ namespace CrawlProxyIP
         public string strTest;
         #endregion
 
+
+
         /// <summary>
         /// 构造函数
         /// </summary>
@@ -165,7 +167,8 @@ namespace CrawlProxyIP
             HttpHelper http = new HttpHelper();
             HttpItem item = new HttpItem()
             {
-                URL = "http://ip-api.com/json/?lang=zh-CN",
+                //URL = "http://ip-api.com/json/?lang=zh-CN",
+                URL = "https://pv.sohu.com/cityjson?ie=utf-8",
                 Method = "get",
                 ProxyIp = dataIP,   //IP地址:端口
                 Timeout = 5000,     //超时毫秒数
