@@ -21,6 +21,9 @@ namespace CrawlProxyIPTool
         {
             txtTest.Clear();
             ProxyIP proxyIP = new ProxyIP();
+            proxyIP.IsCheck = chkCheck.Checked;
+            proxyIP.IsHTTPS = chkHTTPS.Checked;
+            proxyIP.CheckTimeout = Convert.ToInt32(numCheckTimeout.Value);
             proxyIP.EventGetIPDone += new ProxyIP.DelegateGetIPDone(GetIPDone);
             proxyIP.EventGetIPing += new ProxyIP.DelegateGetIPing(GetIPing);
             proxyIP.GetIP_xicidaili();
@@ -31,6 +34,9 @@ namespace CrawlProxyIPTool
         {
             txtTest.Clear();
             ProxyIP proxyIP = new ProxyIP();
+            proxyIP.IsCheck = chkCheck.Checked;
+            proxyIP.IsHTTPS = chkHTTPS.Checked;
+            proxyIP.CheckTimeout = Convert.ToInt32(numCheckTimeout.Value);
             proxyIP.EventGetIPDone += new ProxyIP.DelegateGetIPDone(GetIPDone);
             proxyIP.EventGetIPing += new ProxyIP.DelegateGetIPing(GetIPing);
             proxyIP.GetIP_xicidaili();
@@ -40,6 +46,9 @@ namespace CrawlProxyIPTool
         {
             txtTest.Clear();
             ProxyIP proxyIP = new ProxyIP();
+            proxyIP.IsCheck = chkCheck.Checked;
+            proxyIP.IsHTTPS = chkHTTPS.Checked;
+            proxyIP.CheckTimeout = Convert.ToInt32(numCheckTimeout.Value);
             proxyIP.EventGetIPDone += new ProxyIP.DelegateGetIPDone(GetIPDone);
             proxyIP.EventGetIPing += new ProxyIP.DelegateGetIPing(GetIPing);
             proxyIP.GetIP_zdaye();
