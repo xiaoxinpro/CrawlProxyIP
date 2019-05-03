@@ -38,16 +38,21 @@
             this.label1 = new System.Windows.Forms.Label();
             this.numCheckTimeout = new System.Windows.Forms.NumericUpDown();
             this.label2 = new System.Windows.Forms.Label();
+            this.dataInfo = new System.Windows.Forms.DataGridView();
+            this.btnClear = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.numCheckTimeout)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataInfo)).BeginInit();
             this.SuspendLayout();
             // 
             // txtTest
             // 
+            this.txtTest.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.txtTest.Location = new System.Drawing.Point(171, 12);
             this.txtTest.Multiline = true;
             this.txtTest.Name = "txtTest";
             this.txtTest.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.txtTest.Size = new System.Drawing.Size(337, 426);
+            this.txtTest.Size = new System.Drawing.Size(496, 271);
             this.txtTest.TabIndex = 0;
             // 
             // btnGetIP_xicidaili
@@ -62,7 +67,7 @@
             // 
             // btnTest
             // 
-            this.btnTest.Location = new System.Drawing.Point(12, 415);
+            this.btnTest.Location = new System.Drawing.Point(12, 231);
             this.btnTest.Name = "btnTest";
             this.btnTest.Size = new System.Drawing.Size(144, 23);
             this.btnTest.TabIndex = 2;
@@ -93,6 +98,8 @@
             // chkCheck
             // 
             this.chkCheck.AutoSize = true;
+            this.chkCheck.Checked = true;
+            this.chkCheck.CheckState = System.Windows.Forms.CheckState.Checked;
             this.chkCheck.Location = new System.Drawing.Point(12, 14);
             this.chkCheck.Name = "chkCheck";
             this.chkCheck.Size = new System.Drawing.Size(84, 16);
@@ -155,11 +162,34 @@
             this.label2.TabIndex = 7;
             this.label2.Text = "毫秒";
             // 
+            // dataInfo
+            // 
+            this.dataInfo.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.dataInfo.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataInfo.Location = new System.Drawing.Point(12, 289);
+            this.dataInfo.Name = "dataInfo";
+            this.dataInfo.RowTemplate.Height = 23;
+            this.dataInfo.Size = new System.Drawing.Size(655, 150);
+            this.dataInfo.TabIndex = 9;
+            // 
+            // btnClear
+            // 
+            this.btnClear.Location = new System.Drawing.Point(12, 260);
+            this.btnClear.Name = "btnClear";
+            this.btnClear.Size = new System.Drawing.Size(144, 23);
+            this.btnClear.TabIndex = 2;
+            this.btnClear.Text = "Clear";
+            this.btnClear.UseVisualStyleBackColor = true;
+            this.btnClear.Click += new System.EventHandler(this.btnClear_Click);
+            // 
             // FrmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(520, 450);
+            this.ClientSize = new System.Drawing.Size(679, 450);
+            this.Controls.Add(this.dataInfo);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.numCheckTimeout);
             this.Controls.Add(this.label1);
@@ -167,15 +197,16 @@
             this.Controls.Add(this.chkCheck);
             this.Controls.Add(this.btnGetIP);
             this.Controls.Add(this.btnGetIP_zdaye);
+            this.Controls.Add(this.btnClear);
             this.Controls.Add(this.btnTest);
             this.Controls.Add(this.btnGetIP_xicidaili);
             this.Controls.Add(this.txtTest);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
-            this.MaximizeBox = false;
             this.Name = "FrmMain";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "抓取代理IP工具";
+            this.Load += new System.EventHandler(this.FrmMain_Load);
             ((System.ComponentModel.ISupportInitialize)(this.numCheckTimeout)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataInfo)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -193,6 +224,8 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.NumericUpDown numCheckTimeout;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.DataGridView dataInfo;
+        private System.Windows.Forms.Button btnClear;
     }
 }
 
