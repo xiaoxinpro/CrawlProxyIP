@@ -16,7 +16,6 @@ namespace CrawlProxyIP
         private ConcurrentQueue<string> QueueGetIP = new ConcurrentQueue<string>();
         private ConcurrentQueue<string> QueueCheckIP = new ConcurrentQueue<string>();
         private Stopwatch Watch = new Stopwatch();
-        private bool IsRunGetIP = false;
         #region 全局变量
         public string strTest;
         #endregion
@@ -45,7 +44,7 @@ namespace CrawlProxyIP
         public ProxyIP()
         {
             IsCheck = true;
-            IsHTTPS = true;
+            IsHTTPS = false;
             CheckTimeout = 5000;
         }
         #endregion
