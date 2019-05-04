@@ -214,7 +214,7 @@ namespace CrawlProxyIP
         /// 检验指定IP地址
         /// </summary>
         /// <param name="dataIP">IP地址:端口</param>
-        public void CheckIP(string dataIP)
+        public void CheckIP(string dataIP, bool isHttps = false)
         {
             DateTime startTime = DateTime.Now;
             Stopwatch watchCheckIP = new Stopwatch();
@@ -228,7 +228,7 @@ namespace CrawlProxyIP
                 Timeout = CheckTimeout,             //超时毫秒数
                 ReadWriteTimeout = CheckTimeout,    //超时毫秒数
             };
-            if (IsHTTPS)
+            if (isHttps)
             {
                 item.URL = "https://pv.sohu.com/cityjson?ie=utf-8"; //HTTPS网站
             }
@@ -241,10 +241,17 @@ namespace CrawlProxyIP
                 {
                     if (dataIP.IndexOf(matchs[0].Value) == 0) //matchs[0].Value不包含端口号
                     {
-                        ListProxyIP.Add(dataIP);
-                        QueueCheckIP.Enqueue(dataIP);
-                        EventGetIPing?.Invoke(dataIP);
-                        EventGetIPInfo?.Invoke(dataIP, "OK", startTime, DateTime.Now, watchCheckIP.Elapsed.TotalSeconds,"");
+                        if (IsHTTPS && isHttps == false)
+                        {
+                            CheckIP(dataIP, true);
+                        }
+                        else
+                        {
+                            ListProxyIP.Add(dataIP);
+                            QueueCheckIP.Enqueue(dataIP);
+                            EventGetIPing?.Invoke(dataIP);
+                            EventGetIPInfo?.Invoke(dataIP, "OK", startTime, DateTime.Now, watchCheckIP.Elapsed.TotalSeconds,"");
+                        }
                         return;
                     }
                 }
