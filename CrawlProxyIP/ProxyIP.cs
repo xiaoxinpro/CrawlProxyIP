@@ -124,23 +124,35 @@ namespace CrawlProxyIP
                     Timeout = 5000,
                 };
                 HttpResult result = http.GetHtml(item);
-                Match matchURL = Regex.Match(result.Html, @"/dayProxy/ip/\d+\.html");
-                Console.WriteLine(@"http://ip.zdaye.com" + matchURL.Value);
-                item.URL = @"http://ip.zdaye.com" + matchURL.Value;
-                item.Host = @"ip.zdaye.com";
-                item.Accept = @"text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8";
-                item.Referer = @"http://ip.zdaye.com/dayProxy.html";
-                item.CookieCollection = result.CookieCollection;
-                item.Cookie = result.Cookie;
-                item.Encoding = Encoding.UTF8;
-                result = http.GetHtml(item);
-                MatchCollection matches = Regex.Matches(result.Html, @"(\d{1,3}\.){3}\d{1,3}\:\d{1,5}");
-                foreach (Match match in matches)
+                MatchCollection matchesURL = Regex.Matches(result.Html, @"/dayProxy/ip/\d+\.html");
+                List<string> ListUrl = new List<string>();
+                foreach (Match match in matchesURL)
                 {
-                    QueueGetIP.Enqueue(match.Value);
+                    ListUrl.Add(@"http://ip.zdaye.com" + match.Value);
                 }
-                Console.WriteLine("zdaye获取到" + matches.Count + "个IP地址，开始校验...");
-                TaskRunCheckIP();
+                ListUrl = ListUrl.Distinct().ToList(); //出重
+                //Match matchURL = Regex.Match(result.Html, @"/dayProxy/ip/\d+\.html");
+                //Console.WriteLine(@"http://ip.zdaye.com" + matchURL.Value);
+                //item.URL = @"http://ip.zdaye.com" + matchURL.Value;
+                foreach (string itemUrl in ListUrl)
+                {
+                    Console.WriteLine("开始爬取" + itemUrl);
+                    item.URL = itemUrl;
+                    item.Host = @"ip.zdaye.com";
+                    item.Accept = @"text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8";
+                    item.Referer = @"http://ip.zdaye.com/dayProxy.html";
+                    item.CookieCollection = result.CookieCollection;
+                    item.Cookie = result.Cookie;
+                    item.Encoding = Encoding.UTF8;
+                    result = http.GetHtml(item);
+                    MatchCollection matches = Regex.Matches(result.Html, @"(\d{1,3}\.){3}\d{1,3}\:\d{1,5}");
+                    foreach (Match match in matches)
+                    {
+                        QueueGetIP.Enqueue(match.Value);
+                    }
+                    Console.WriteLine("zdaye获取到" + matches.Count + "个IP地址，开始校验...");
+                    TaskRunCheckIP();
+                }
                 Watch.Stop();
                 Console.WriteLine("耗时：" + Watch.Elapsed.TotalSeconds);
                 EventGetIPDone?.Invoke(ListProxyIP.ToArray());
@@ -233,6 +245,7 @@ namespace CrawlProxyIP
                         QueueCheckIP.Enqueue(dataIP);
                         EventGetIPing?.Invoke(dataIP);
                         EventGetIPInfo?.Invoke(dataIP, "OK", startTime, DateTime.Now, watchCheckIP.Elapsed.TotalSeconds,"");
+                        return;
                     }
                 }
             }
