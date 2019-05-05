@@ -90,7 +90,7 @@ namespace CrawlProxyIP
                 };
                 HttpResult result = Http.GetHtml(Item);
                 strTest = result.Html;
-                MatchCollection matches = Regex.Matches(result.Html, @"(\d{1,3}\.){3}\d{1,3}</td>\s*<td>\d{1,5}");
+                MatchCollection matches = Regex.Matches(result.Html, @"(\d{1,3}\.){3}\d{1,3}\D+\d{1,5}");
                 foreach (Match match in matches)
                 {
                     QueueGetIP.Enqueue(Regex.Replace(match.Value, @"</td>\s*<td>", ":"));
