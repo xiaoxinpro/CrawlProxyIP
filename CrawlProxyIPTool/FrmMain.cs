@@ -29,7 +29,7 @@ namespace CrawlProxyIPTool
             DT_Info.Columns.Add("错误信息");
 
             dataInfo.DataSource = DT_Info;
-            DT_Info.Rows.Add("0.0.0.0", "Init", DateTime.Now.ToString("hh:mm:ss.fff"), DateTime.Now.ToString("hh:mm:ss.fff"), 0.0, "null");
+            DT_Info.Rows.Add("0.0.0.0", "Init", DateTime.Now.ToString("HH:mm:ss.fff"), DateTime.Now.ToString("hh:mm:ss.fff"), 0.0, "null");
         }
 
         private void btnGetIP_Click(object sender, EventArgs e)
@@ -93,7 +93,7 @@ namespace CrawlProxyIPTool
         {
             this.Invoke(new Action(() =>
             {
-                DT_Info.Rows.Add(msg, status, startTime.ToString("hh:mm:ss.fff"), endTime.ToString("hh:mm:ss.fff"), lenTime, error);
+                DT_Info.Rows.Add(msg, status, startTime.ToString("HH:mm:ss.fff"), endTime.ToString("hh:mm:ss.fff"), lenTime, error);
             }));
         }
 
