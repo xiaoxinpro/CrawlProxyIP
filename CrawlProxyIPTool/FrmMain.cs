@@ -29,7 +29,7 @@ namespace CrawlProxyIPTool
             DT_Info.Columns.Add("错误信息");
 
             dataInfo.DataSource = DT_Info;
-            DT_Info.Rows.Add("0.0.0.0", "Init", DateTime.Now.ToString("HH:mm:ss.fff"), DateTime.Now.ToString("hh:mm:ss.fff"), 0.0, "null");
+            DT_Info.Rows.Add("0.0.0.0", "Init", DateTime.Now.ToString("HH:mm:ss.fff"), DateTime.Now.ToString("HH:mm:ss.fff"), 0.0, "null");
         }
 
         private void btnGetIP_Click(object sender, EventArgs e)
@@ -44,6 +44,20 @@ namespace CrawlProxyIPTool
             proxyIP.EventGetIPInfo += ProxyIP_EventGetIPInfo;
             proxyIP.GetIP_xicidaili();
             proxyIP.GetIP_zdaye();
+        }
+
+
+        private void btnGetIP_xxgzs_Click(object sender, EventArgs e)
+        {
+            txtTest.Clear();
+            ProxyIP proxyIP = new ProxyIP();
+            proxyIP.IsCheck = chkCheck.Checked;
+            proxyIP.IsHTTPS = chkHTTPS.Checked;
+            proxyIP.CheckTimeout = Convert.ToInt32(numCheckTimeout.Value);
+            proxyIP.EventGetIPDone += new ProxyIP.DelegateGetIPDone(GetIPDone);
+            proxyIP.EventGetIPing += new ProxyIP.DelegateGetIPing(GetIPing);
+            proxyIP.EventGetIPInfo += ProxyIP_EventGetIPInfo;
+            proxyIP.GetIP_xxgzs();
         }
 
         private void btnGetIP_xicidaili_Click(object sender, EventArgs e)
@@ -93,7 +107,7 @@ namespace CrawlProxyIPTool
         {
             this.Invoke(new Action(() =>
             {
-                DT_Info.Rows.Add(msg, status, startTime.ToString("HH:mm:ss.fff"), endTime.ToString("hh:mm:ss.fff"), lenTime, error);
+                DT_Info.Rows.Add(msg, status, startTime.ToString("HH:mm:ss.fff"), endTime.ToString("HH:mm:ss.fff"), lenTime, error);
             }));
         }
 
@@ -107,5 +121,6 @@ namespace CrawlProxyIPTool
         {
             DT_Info.Rows.Clear();
         }
+
     }
 }
