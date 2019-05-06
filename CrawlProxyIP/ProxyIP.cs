@@ -75,6 +75,38 @@ namespace CrawlProxyIP
 
         #region 代理获取函数
         /// <summary>
+        /// 获取xxgzs代理IP
+        /// </summary>
+        public void GetIP_xxgzs()
+        {
+            Task taskMain = new Task(() => {
+                Watch = new Stopwatch();
+                Watch.Start();
+                HttpHelper Http = new HttpHelper();
+                HttpItem Item = new HttpItem()
+                {
+                    URL = "http://10.0.0.7:8899/api/v1/proxies?limit=100&https=true",
+                    Method = "get",
+                };
+                HttpResult result = Http.GetHtml(Item);
+                strTest = result.Html;
+                MatchCollection matches = Regex.Matches(result.Html, @"(\d{1,3}\.){3}\d{1,3}\D+\d{1,5}");
+                foreach (Match match in matches)
+                {
+                    QueueGetIP.Enqueue(Regex.Replace(match.Value, @"\""\D+", ":"));
+                }
+                Console.WriteLine("xxgzs获取到" + matches.Count + "个IP地址，开始校验...");
+                TaskRunCheckIP();
+
+                Watch.Stop();
+                Console.WriteLine("耗时：" + Watch.Elapsed.TotalSeconds);
+
+                EventGetIPDone?.Invoke(ListProxyIP.ToArray());
+            });
+            taskMain.Start();
+        }
+
+        /// <summary>
         /// 获取xicidaili代理IP
         /// </summary>
         public void GetIP_xicidaili()
