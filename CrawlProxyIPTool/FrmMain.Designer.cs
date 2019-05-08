@@ -174,6 +174,7 @@
             this.dataInfo.RowTemplate.Height = 23;
             this.dataInfo.Size = new System.Drawing.Size(655, 150);
             this.dataInfo.TabIndex = 9;
+            this.dataInfo.CellMouseDoubleClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dataInfo_CellMouseDoubleClick);
             // 
             // btnClear
             // 

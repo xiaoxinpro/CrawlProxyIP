@@ -311,6 +311,71 @@ namespace CrawlProxyIP
         //}
         #endregion
 
+        #region 校验IP地址（公共函数）
+        public void xxIP(string ip, string port)
+        {
+            Task.Factory.StartNew(() =>
+            {
+                string now_ip = GetNowIP();
+                string url = @"ide.xiaoxin.pro/xxIP/index.php/Index/Api/ip?";
+                url += @"proxy_ip=" + ip + @"&proxy_port=" + port + @"&real_ip=" + now_ip;
+                if (IsHTTPS)
+                {
+                    url = @"https://" + url;
+                }
+                else
+                {
+                    url = @"http://" + url;
+                }
+                DateTime startTime = DateTime.Now;
+                Stopwatch watchCheckIP = new Stopwatch();
+                watchCheckIP.Start();
+                HttpHelper http = new HttpHelper();
+                HttpItem item = new HttpItem()
+                {
+                    URL = url,                          //HTTP网站 http://ip-api.com/json/?lang=zh-CN
+                    Method = "get",
+                    ProxyIp = ip + ":" + port,          //IP地址:端口
+                    Timeout = CheckTimeout,             //超时毫秒数
+                    ReadWriteTimeout = CheckTimeout,    //超时毫秒数
+                };
+                HttpResult checkResult = http.GetHtml(item);
+                watchCheckIP.Stop();
+                if (checkResult.StatusCode == System.Net.HttpStatusCode.OK)
+                {
+                    EventGetIPing?.Invoke(checkResult.Html);
+                }
+                else
+                {
+                    EventGetIPing?.Invoke("Error "+ checkResult.StatusCode + ":" + checkResult.StatusDescription);
+                }
+                
+            });
+        }
+
+        public string GetNowIP()
+        {
+            HttpHelper http = new HttpHelper();
+            HttpItem item = new HttpItem()
+            {
+                URL = "https://ide.xiaoxin.pro/xxIP/index.php/Index/Api/ip",//HTTP网站 http://ip-api.com/json/?lang=zh-CN
+                Method = "get",
+                Timeout = CheckTimeout,             //超时毫秒数
+                ReadWriteTimeout = CheckTimeout,    //超时毫秒数
+            };
+            HttpResult checkResult = http.GetHtml(item);
+            if (checkResult.StatusCode == System.Net.HttpStatusCode.OK)
+            {
+                Match match = Regex.Match(checkResult.Html, @"(\d{1,3}\.){3}\d{1,3}");
+                return match.Value;
+            }
+            else
+            {
+                return "";
+            }
+        }
+        #endregion
+
         /// <summary>
         /// 测试函数
         /// </summary>

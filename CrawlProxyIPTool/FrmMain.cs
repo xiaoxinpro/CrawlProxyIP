@@ -122,5 +122,20 @@ namespace CrawlProxyIPTool
             DT_Info.Rows.Clear();
         }
 
+        private void dataInfo_CellMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            DataGridView dataView = (DataGridView)sender;
+            string dataIP = dataView.SelectedCells[0].Value.ToString();
+            Console.WriteLine(dataIP);
+            string[] arrIP = dataIP.Split(':');
+            if (arrIP.Length == 2)
+            {
+                ProxyIP proxyIP = new ProxyIP();
+                proxyIP.IsHTTPS = chkHTTPS.Checked;
+                proxyIP.EventGetIPing += new ProxyIP.DelegateGetIPing(GetIPing);
+                proxyIP.xxIP(arrIP[0], arrIP[1]);
+                MessageBox.Show("验证" + dataIP + "中...");
+            }
+        }
     }
 }
