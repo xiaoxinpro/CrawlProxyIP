@@ -152,5 +152,13 @@ namespace CrawlProxyIPTool
                 MessageBox.Show("验证" + dataIP + "中...");
             }
         }
+
+        private void btnCheck_Click(object sender, EventArgs e)
+        {
+            ProxyIP proxyIP = new ProxyIP();
+            proxyIP.IsHTTPS = chkHTTPS.Checked;
+            proxyIP.EventGetIPing += new ProxyIP.DelegateGetIPing(GetIPing);
+            proxyIP.xxIP();
+        }
     }
 }

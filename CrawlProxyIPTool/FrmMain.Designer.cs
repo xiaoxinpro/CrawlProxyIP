@@ -41,6 +41,7 @@
             this.dataInfo = new System.Windows.Forms.DataGridView();
             this.btnClear = new System.Windows.Forms.Button();
             this.btnGetIP_xxgzs = new System.Windows.Forms.Button();
+            this.btnCheck = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.numCheckTimeout)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataInfo)).BeginInit();
             this.SuspendLayout();
@@ -70,7 +71,7 @@
             // 
             this.btnTest.Location = new System.Drawing.Point(12, 231);
             this.btnTest.Name = "btnTest";
-            this.btnTest.Size = new System.Drawing.Size(144, 23);
+            this.btnTest.Size = new System.Drawing.Size(65, 23);
             this.btnTest.TabIndex = 2;
             this.btnTest.Text = "Test";
             this.btnTest.UseVisualStyleBackColor = true;
@@ -196,6 +197,16 @@
             this.btnGetIP_xxgzs.UseVisualStyleBackColor = true;
             this.btnGetIP_xxgzs.Click += new System.EventHandler(this.btnGetIP_xxgzs_Click);
             // 
+            // btnCheck
+            // 
+            this.btnCheck.Location = new System.Drawing.Point(91, 231);
+            this.btnCheck.Name = "btnCheck";
+            this.btnCheck.Size = new System.Drawing.Size(65, 23);
+            this.btnCheck.TabIndex = 2;
+            this.btnCheck.Text = "Check";
+            this.btnCheck.UseVisualStyleBackColor = true;
+            this.btnCheck.Click += new System.EventHandler(this.btnCheck_Click);
+            // 
             // FrmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -210,6 +221,7 @@
             this.Controls.Add(this.btnGetIP);
             this.Controls.Add(this.btnGetIP_zdaye);
             this.Controls.Add(this.btnClear);
+            this.Controls.Add(this.btnCheck);
             this.Controls.Add(this.btnTest);
             this.Controls.Add(this.btnGetIP_xxgzs);
             this.Controls.Add(this.btnGetIP_xicidaili);
@@ -240,6 +252,7 @@
         private System.Windows.Forms.DataGridView dataInfo;
         private System.Windows.Forms.Button btnClear;
         private System.Windows.Forms.Button btnGetIP_xxgzs;
+        private System.Windows.Forms.Button btnCheck;
     }
 }
 
