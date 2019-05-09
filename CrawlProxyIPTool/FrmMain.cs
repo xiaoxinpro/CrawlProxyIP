@@ -113,8 +113,23 @@ namespace CrawlProxyIPTool
 
         private void btnTest_Click(object sender, EventArgs e)
         {
-            ProxyIP proxyIP = new ProxyIP();
-            txtTest.Text = proxyIP.Test();
+            //ProxyIP proxyIP = new ProxyIP();
+            //txtTest.Text = proxyIP.Test();
+            foreach (DataGridViewRow itemRow in dataInfo.Rows)
+            {
+                if (itemRow.Cells[1].Value != null && itemRow.Cells[1].Value.ToString() == "OK")
+                {
+                    string dataIP = itemRow.Cells[0].Value.ToString();
+                    string[] arrIP = dataIP.Split(':');
+                    if (arrIP.Length == 2)
+                    {
+                        ProxyIP proxyIP = new ProxyIP();
+                        proxyIP.IsHTTPS = chkHTTPS.Checked;
+                        proxyIP.EventGetIPing += new ProxyIP.DelegateGetIPing(GetIPing);
+                        proxyIP.xxIP(arrIP[0], arrIP[1]);
+                    }
+                }
+            }
         }
 
         private void btnClear_Click(object sender, EventArgs e)
