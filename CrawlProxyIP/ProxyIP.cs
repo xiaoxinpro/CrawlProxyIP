@@ -312,6 +312,26 @@ namespace CrawlProxyIP
         #endregion
 
         #region 校验IP地址（公共函数）
+        public void xxIP()
+        {
+            Task.Factory.StartNew(() =>
+            {
+                get_xxIP_list();
+            });
+        }
+
+        private void get_xxIP_list(int page = 0, int num = 100)
+        {
+            HttpHelper http = new HttpHelper();
+            HttpItem item = new HttpItem()
+            {
+                URL = @"https://ide.xiaoxin.pro/xxIP/index.php/Index/Api/check?type=get&page=" + page.ToString() + @"&num=" + num.ToString(),
+                Method = "get",
+            };
+            HttpResult checkResult = http.GetHtml(item);
+            EventGetIPing?.Invoke(checkResult.Html);
+        }
+
         public void xxIP(string ip, string port)
         {
             Task.Factory.StartNew(() =>
