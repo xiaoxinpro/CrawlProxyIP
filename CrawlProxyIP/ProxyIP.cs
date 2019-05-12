@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -316,30 +318,59 @@ namespace CrawlProxyIP
         {
             Task.Factory.StartNew(() =>
             {
-                get_xxIP_list();
+                try
+                {
+                    get_xxIP_list();
+                }
+                catch (Exception err)
+                {
+                    Console.WriteLine(err.Message);
+                }
             });
         }
 
         private void get_xxIP_list(int page = 0, int num = 100)
         {
-            HttpHelper http = new HttpHelper();
-            HttpItem item = new HttpItem()
+            int page_all = 0;
+            int ip_count = 0;
+            do
             {
-                URL = @"https://ide.xiaoxin.pro/xxIP/index.php/Index/Api/check?type=get&page=" + page.ToString() + @"&num=" + num.ToString(),
-                Method = "get",
-            };
-            HttpResult checkResult = http.GetHtml(item);
-            EventGetIPing?.Invoke(checkResult.Html);
+                HttpHelper http = new HttpHelper();
+                HttpItem item = new HttpItem()
+                {
+                    URL = @"https://ide.xiaoxin.pro/xxIP/index.php/Index/Api/check?type=get&page=" + page.ToString() + @"&num=" + num.ToString(),
+                    Method = "get",
+                };
+                HttpResult checkResult = http.GetHtml(item);
+                EventGetIPing?.Invoke(checkResult.Html);
+                JObject json = JObject.Parse(checkResult.Html);
+                //Console.WriteLine(json);
+                page = Convert.ToInt32(json["page"]);
+                page_all = Convert.ToInt32(json["page_all"]);
+                ip_count = Convert.ToInt32(json["count"]);
+                //Console.WriteLine("Json: page=" + ip_page + ",page_all=" + ip_page_all + ",count=" + ip_count);
+                foreach (JProperty ip_data in json["data"])
+                {
+                    string ip_data_id = ip_data.Name.ToString();
+                    string ip_data_name = (new JObject(ip_data))[ip_data_id].ToString();
+                    string[] arrIP = ip_data_name.Split(':');
+                    if (arrIP.Length == 2)
+                    {
+                        xxIP(arrIP[0], arrIP[1], false);
+                        xxIP(arrIP[0], arrIP[1], true);
+                    }
+                }
+            } while (++page <= page_all);
         }
 
-        public void xxIP(string ip, string port)
+        public void xxIP(string ip, string port, bool isHttps = false)
         {
             Task.Factory.StartNew(() =>
             {
                 string now_ip = GetNowIP();
                 string url = @"ide.xiaoxin.pro/xxIP/index.php/Index/Api/ip?";
                 url += @"proxy_ip=" + ip + @"&proxy_port=" + port + @"&real_ip=" + now_ip;
-                if (IsHTTPS)
+                if (isHttps)
                 {
                     url = @"https://" + url;
                 }
@@ -363,13 +394,16 @@ namespace CrawlProxyIP
                 watchCheckIP.Stop();
                 if (checkResult.StatusCode == System.Net.HttpStatusCode.OK)
                 {
-                    EventGetIPing?.Invoke(checkResult.Html);
+                    //EventGetIPing?.Invoke(checkResult.Html);
                 }
                 else
                 {
-                    EventGetIPing?.Invoke("Error "+ checkResult.StatusCode + ":" + checkResult.StatusDescription);
+                    //EventGetIPing?.Invoke("Error "+ checkResult.StatusCode + ":" + checkResult.StatusDescription);
+                    item.ProxyIp = null;
+                    checkResult = http.GetHtml(item);
+                    EventGetIPing?.Invoke(item.URL + "\r\n" + checkResult.Html);
+                    return;
                 }
-                
             });
         }
 
