@@ -394,14 +394,14 @@ namespace CrawlProxyIP
                 watchCheckIP.Stop();
                 if (checkResult.StatusCode == System.Net.HttpStatusCode.OK)
                 {
-                    //EventGetIPing?.Invoke(checkResult.Html);
+                    EventGetIPing?.Invoke(checkResult.Html);
                 }
                 else
                 {
-                    //EventGetIPing?.Invoke("Error "+ checkResult.StatusCode + ":" + checkResult.StatusDescription);
+                    EventGetIPing?.Invoke("Error " + checkResult.StatusCode + ":" + checkResult.StatusDescription);
                     item.ProxyIp = null;
                     checkResult = http.GetHtml(item);
-                    EventGetIPing?.Invoke(item.URL + "\r\n" + checkResult.Html);
+                    //EventGetIPing?.Invoke(item.URL + "\r\n" + checkResult.Html);
                     return;
                 }
             });
