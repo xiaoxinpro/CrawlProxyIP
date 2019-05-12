@@ -126,7 +126,7 @@ namespace CrawlProxyIPTool
                         ProxyIP proxyIP = new ProxyIP();
                         proxyIP.IsHTTPS = chkHTTPS.Checked;
                         proxyIP.EventGetIPing += new ProxyIP.DelegateGetIPing(GetIPing);
-                        proxyIP.xxIP(arrIP[0], arrIP[1]);
+                        proxyIP.xxIP(arrIP[0], arrIP[1], chkHTTPS.Checked);
                     }
                 }
             }
