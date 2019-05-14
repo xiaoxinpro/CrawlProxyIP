@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.txtTest = new System.Windows.Forms.TextBox();
             this.btnGetIP_xicidaili = new System.Windows.Forms.Button();
             this.btnTest = new System.Windows.Forms.Button();
@@ -47,6 +48,7 @@
             this.numTimer = new System.Windows.Forms.NumericUpDown();
             this.label4 = new System.Windows.Forms.Label();
             this.btnRun = new System.Windows.Forms.Button();
+            this.timRun = new System.Windows.Forms.Timer(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.numCheckTimeout)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataInfo)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numTimer)).BeginInit();
@@ -225,6 +227,7 @@
             this.chkTimer.TabIndex = 10;
             this.chkTimer.Text = "定时启动流程";
             this.chkTimer.UseVisualStyleBackColor = true;
+            this.chkTimer.CheckedChanged += new System.EventHandler(this.chkTimer_CheckedChanged);
             // 
             // label3
             // 
@@ -279,6 +282,12 @@
             this.btnRun.TabIndex = 13;
             this.btnRun.Text = "Run";
             this.btnRun.UseVisualStyleBackColor = true;
+            this.btnRun.Click += new System.EventHandler(this.btnRun_Click);
+            // 
+            // timRun
+            // 
+            this.timRun.Interval = 60000;
+            this.timRun.Tick += new System.EventHandler(this.timRun_Tick);
             // 
             // FrmMain
             // 
@@ -337,6 +346,7 @@
         private System.Windows.Forms.NumericUpDown numTimer;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Button btnRun;
+        private System.Windows.Forms.Timer timRun;
     }
 }
 

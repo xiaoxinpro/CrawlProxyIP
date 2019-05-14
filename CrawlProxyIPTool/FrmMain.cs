@@ -160,5 +160,64 @@ namespace CrawlProxyIPTool
             proxyIP.EventGetIPing += new ProxyIP.DelegateGetIPing(GetIPing);
             proxyIP.xxIP();
         }
+
+        private void chkTimer_CheckedChanged(object sender, EventArgs e)
+        {
+            CheckBox checkBox = (CheckBox)sender;
+            numTimer.Enabled = !checkBox.Checked;
+            timRun.Enabled = checkBox.Checked;
+            cntTimer = 0;
+        }
+
+        private int cntTimer = 0;
+        private void timRun_Tick(object sender, EventArgs e)
+        {
+            if (++cntTimer >= numTimer.Value)
+            {
+                RunProcess();
+            }
+        }
+
+        private void btnRun_Click(object sender, EventArgs e)
+        {
+            chkTimer.Checked = true;
+            RunProcess();
+        }
+
+        private void RunProcess()
+        {
+            cntTimer = 0;
+            txtTest.Clear();
+            ProxyIP proxyIP = new ProxyIP();
+            proxyIP.IsCheck = chkCheck.Checked;
+            proxyIP.IsHTTPS = chkHTTPS.Checked;
+            proxyIP.CheckTimeout = Convert.ToInt32(numCheckTimeout.Value);
+            proxyIP.EventGetIPDone += new ProxyIP.DelegateGetIPDone(RunDone);
+            proxyIP.EventGetIPing += new ProxyIP.DelegateGetIPing(GetIPing);
+            proxyIP.EventGetIPInfo += ProxyIP_EventGetIPInfo;
+            proxyIP.xxIP();
+            proxyIP.GetIP_zdaye();
+        }
+
+        private void RunDone(string[] arrData)
+        {
+            if (!chkTimer.Checked) return;
+            foreach (string dataIP in arrData)
+            {
+                string[] arrIP = dataIP.Split(':');
+                if (arrIP.Length == 2)
+                {
+                    ProxyIP proxyIP = new ProxyIP();
+                    proxyIP.IsHTTPS = false;
+                    proxyIP.EventGetIPing += new ProxyIP.DelegateGetIPing(GetIPing);
+                    proxyIP.xxIP(arrIP[0], arrIP[1], false);
+                    ProxyIP proxyIPs = new ProxyIP();
+                    proxyIPs.IsHTTPS = true;
+                    proxyIPs.EventGetIPing += new ProxyIP.DelegateGetIPing(GetIPing);
+                    proxyIPs.xxIP(arrIP[0], arrIP[1], true);
+                }
+            }
+        }
+
     }
 }
