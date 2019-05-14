@@ -42,8 +42,14 @@
             this.btnClear = new System.Windows.Forms.Button();
             this.btnGetIP_xxgzs = new System.Windows.Forms.Button();
             this.btnCheck = new System.Windows.Forms.Button();
+            this.chkTimer = new System.Windows.Forms.CheckBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.numTimer = new System.Windows.Forms.NumericUpDown();
+            this.label4 = new System.Windows.Forms.Label();
+            this.btnRun = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.numCheckTimeout)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataInfo)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numTimer)).BeginInit();
             this.SuspendLayout();
             // 
             // txtTest
@@ -54,7 +60,7 @@
             this.txtTest.Multiline = true;
             this.txtTest.Name = "txtTest";
             this.txtTest.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.txtTest.Size = new System.Drawing.Size(496, 271);
+            this.txtTest.Size = new System.Drawing.Size(381, 271);
             this.txtTest.TabIndex = 0;
             // 
             // btnGetIP_xicidaili
@@ -69,9 +75,10 @@
             // 
             // btnTest
             // 
-            this.btnTest.Location = new System.Drawing.Point(12, 231);
+            this.btnTest.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnTest.Location = new System.Drawing.Point(558, 231);
             this.btnTest.Name = "btnTest";
-            this.btnTest.Size = new System.Drawing.Size(65, 23);
+            this.btnTest.Size = new System.Drawing.Size(109, 23);
             this.btnTest.TabIndex = 2;
             this.btnTest.Text = "Test";
             this.btnTest.UseVisualStyleBackColor = true;
@@ -199,19 +206,90 @@
             // 
             // btnCheck
             // 
-            this.btnCheck.Location = new System.Drawing.Point(91, 231);
+            this.btnCheck.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnCheck.Location = new System.Drawing.Point(558, 260);
             this.btnCheck.Name = "btnCheck";
-            this.btnCheck.Size = new System.Drawing.Size(65, 23);
+            this.btnCheck.Size = new System.Drawing.Size(109, 23);
             this.btnCheck.TabIndex = 2;
             this.btnCheck.Text = "Check";
             this.btnCheck.UseVisualStyleBackColor = true;
             this.btnCheck.Click += new System.EventHandler(this.btnCheck_Click);
+            // 
+            // chkTimer
+            // 
+            this.chkTimer.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.chkTimer.AutoSize = true;
+            this.chkTimer.Location = new System.Drawing.Point(558, 14);
+            this.chkTimer.Name = "chkTimer";
+            this.chkTimer.Size = new System.Drawing.Size(96, 16);
+            this.chkTimer.TabIndex = 10;
+            this.chkTimer.Text = "定时启动流程";
+            this.chkTimer.UseVisualStyleBackColor = true;
+            // 
+            // label3
+            // 
+            this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(556, 40);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(29, 12);
+            this.label3.TabIndex = 11;
+            this.label3.Text = "定时";
+            // 
+            // numTimer
+            // 
+            this.numTimer.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.numTimer.Location = new System.Drawing.Point(588, 38);
+            this.numTimer.Maximum = new decimal(new int[] {
+            6000,
+            0,
+            0,
+            0});
+            this.numTimer.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.numTimer.Name = "numTimer";
+            this.numTimer.Size = new System.Drawing.Size(45, 21);
+            this.numTimer.TabIndex = 12;
+            this.numTimer.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.numTimer.Value = new decimal(new int[] {
+            60,
+            0,
+            0,
+            0});
+            // 
+            // label4
+            // 
+            this.label4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(638, 40);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(29, 12);
+            this.label4.TabIndex = 11;
+            this.label4.Text = "分钟";
+            // 
+            // btnRun
+            // 
+            this.btnRun.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnRun.Location = new System.Drawing.Point(558, 65);
+            this.btnRun.Name = "btnRun";
+            this.btnRun.Size = new System.Drawing.Size(109, 23);
+            this.btnRun.TabIndex = 13;
+            this.btnRun.Text = "Run";
+            this.btnRun.UseVisualStyleBackColor = true;
             // 
             // FrmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(679, 450);
+            this.Controls.Add(this.btnRun);
+            this.Controls.Add(this.numTimer);
+            this.Controls.Add(this.label4);
+            this.Controls.Add(this.label3);
+            this.Controls.Add(this.chkTimer);
             this.Controls.Add(this.dataInfo);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.numCheckTimeout);
@@ -232,6 +310,7 @@
             this.Load += new System.EventHandler(this.FrmMain_Load);
             ((System.ComponentModel.ISupportInitialize)(this.numCheckTimeout)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataInfo)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numTimer)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -253,6 +332,11 @@
         private System.Windows.Forms.Button btnClear;
         private System.Windows.Forms.Button btnGetIP_xxgzs;
         private System.Windows.Forms.Button btnCheck;
+        private System.Windows.Forms.CheckBox chkTimer;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.NumericUpDown numTimer;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Button btnRun;
     }
 }
 
