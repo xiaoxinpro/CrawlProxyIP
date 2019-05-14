@@ -90,12 +90,12 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="CrawlProxyIP.dll">
+    <EmbeddedResource Include="CrawlProxyIP.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Newtonsoft.Json.dll">
+    </EmbeddedResource>
+    <EmbeddedResource Include="Newtonsoft.Json.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
