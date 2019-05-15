@@ -188,6 +188,7 @@ namespace CrawlProxyIPTool
         {
             cntTimer = 0;
             txtTest.Clear();
+            DT_Info.Clear();
             ProxyIP proxyIP = new ProxyIP();
             proxyIP.IsCheck = chkCheck.Checked;
             proxyIP.IsHTTPS = chkHTTPS.Checked;
