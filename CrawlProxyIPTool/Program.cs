@@ -13,6 +13,10 @@ namespace CrawlProxyIPTool
         [STAThread]
         static void Main()
         {
+            //加载嵌入的DLL文件
+            LoadResourceDll.RegistDLL();
+
+            //加载界面
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new FrmMain());
