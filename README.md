@@ -8,7 +8,7 @@
 
 库文件：[CrawlProxyIP.dll](https://github.com/xiaoxinpro/CrawlProxyIP/raw/master/CrawlProxyIP/bin/Debug/CrawlProxyIP.dll)
 
-测试工具：[CrawlProxyIPTool.exe](https://github.com/xiaoxinpro/CrawlProxyIP/raw/master/CrawlProxyIPTool/bin/Debug/CrawlProxyIPTool.exe) (需要将CrawlProxyIP.dll放在同一目录下)
+测试工具：[CrawlProxyIPTool.exe](https://github.com/xiaoxinpro/CrawlProxyIP/raw/master/CrawlProxyIPTool/bin/Debug/CrawlProxyIPTool.exe)
 
 ## 快速上手
 
