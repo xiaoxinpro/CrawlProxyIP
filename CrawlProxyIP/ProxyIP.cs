@@ -18,6 +18,7 @@ namespace CrawlProxyIP
         private ConcurrentQueue<string> QueueGetIP = new ConcurrentQueue<string>();
         private ConcurrentQueue<string> QueueCheckIP = new ConcurrentQueue<string>();
         private Stopwatch Watch = new Stopwatch();
+        private static bool IsRun = false;
         #region 全局变量
         public string strTest;
         #endregion
@@ -81,6 +82,7 @@ namespace CrawlProxyIP
         /// </summary>
         public void GetIP_xxgzs()
         {
+            IsRun = true;
             Task taskMain = new Task(() => {
                 Watch = new Stopwatch();
                 Watch.Start();
@@ -99,7 +101,7 @@ namespace CrawlProxyIP
                 }
                 Console.WriteLine("xxgzs获取到" + matches.Count + "个IP地址，开始校验...");
                 TaskRunCheckIP();
-
+                if (!IsRun) return;
                 Watch.Stop();
                 Console.WriteLine("耗时：" + Watch.Elapsed.TotalSeconds);
 
@@ -113,6 +115,7 @@ namespace CrawlProxyIP
         /// </summary>
         public void GetIP_xicidaili()
         {
+            IsRun = true;
             Task taskMain = new Task(()=> {
                 Watch = new Stopwatch();
                 Watch.Start();
@@ -131,7 +134,7 @@ namespace CrawlProxyIP
                 }
                 Console.WriteLine("xicidaili获取到" + matches.Count + "个IP地址，开始校验...");
                 TaskRunCheckIP();
-            
+                if (!IsRun) return;
                 Watch.Stop();
                 Console.WriteLine("耗时：" + Watch.Elapsed.TotalSeconds);
 
@@ -145,6 +148,7 @@ namespace CrawlProxyIP
         /// </summary>
         public void GetIP_zdaye()
         {
+            IsRun = true;
             Watch = new Stopwatch();
             Watch.Start();
             Task.Factory.StartNew(() =>
@@ -187,6 +191,7 @@ namespace CrawlProxyIP
                     }
                     Console.WriteLine("zdaye获取到" + QueueGetIP.Count + "个IP地址，开始校验...");
                     TaskRunCheckIP();
+                    if (!IsRun) return;
                 }
                 Watch.Stop();
                 Console.WriteLine("耗时：" + Watch.Elapsed.TotalSeconds);
@@ -208,6 +213,7 @@ namespace CrawlProxyIP
                 var tasks = new Task[QueueGetIP.Count];
                 for (int i = 0; i < tasks.Length; i++)
                 {
+                    if (!IsRun) return;
                     tasks[i] = Task.Factory.StartNew(() => CheckIP());
                 }
                 Task.WaitAll(tasks);
@@ -238,6 +244,7 @@ namespace CrawlProxyIP
         {
             while (QueueGetIP.IsEmpty == false)
             {
+                if (!IsRun) return;
                 if (QueueGetIP.TryDequeue(out string dataIP))
                 {
                     CheckIP(dataIP);
@@ -269,6 +276,7 @@ namespace CrawlProxyIP
             }
             HttpResult checkResult = http.GetHtml(item);
             watchCheckIP.Stop();
+            if (!IsRun) return;
             if (checkResult.StatusCode == System.Net.HttpStatusCode.OK)
             {
                 MatchCollection matchs = Regex.Matches(checkResult.Html, @"(\d{1,3}\.){3}\d{1,3}");
@@ -318,6 +326,7 @@ namespace CrawlProxyIP
         #region 校验IP地址（公共函数）
         public void xxIP()
         {
+            IsRun = true;
             Task.Factory.StartNew(() =>
             {
                 try
@@ -344,6 +353,7 @@ namespace CrawlProxyIP
                     Method = "get",
                 };
                 HttpResult checkResult = http.GetHtml(item);
+                if (!IsRun) return;
                 EventGetIPing?.Invoke(checkResult.Html);
                 JObject json = JObject.Parse(checkResult.Html);
                 //Console.WriteLine(json);
@@ -358,6 +368,7 @@ namespace CrawlProxyIP
                     string[] arrIP = ip_data_name.Split(':');
                     if (arrIP.Length == 2)
                     {
+                        if (!IsRun) return;
                         xxIP(arrIP[0], arrIP[1], false);
                         xxIP(arrIP[0], arrIP[1], true);
                     }
@@ -367,6 +378,7 @@ namespace CrawlProxyIP
 
         public void xxIP(string ip, string port, bool isHttps = false)
         {
+            IsRun = true;
             Task.Factory.StartNew(() =>
             {
                 string now_ip = GetNowIP();
@@ -394,6 +406,7 @@ namespace CrawlProxyIP
                 };
                 HttpResult checkResult = http.GetHtml(item);
                 watchCheckIP.Stop();
+                if (!IsRun) return;
                 if (checkResult.StatusCode == System.Net.HttpStatusCode.OK)
                 {
                     EventGetIPing?.Invoke(checkResult.Html);
@@ -420,6 +433,7 @@ namespace CrawlProxyIP
                 ReadWriteTimeout = CheckTimeout,    //超时毫秒数
             };
             HttpResult checkResult = http.GetHtml(item);
+            if (!IsRun) return"";
             if (checkResult.StatusCode == System.Net.HttpStatusCode.OK)
             {
                 Match match = Regex.Match(checkResult.Html, @"(\d{1,3}\.){3}\d{1,3}");
@@ -431,6 +445,14 @@ namespace CrawlProxyIP
             }
         }
         #endregion
+
+        /// <summary>
+        /// 停止运行
+        /// </summary>
+        public static void Stop()
+        {
+            IsRun = false;
+        }
 
         /// <summary>
         /// 测试函数
