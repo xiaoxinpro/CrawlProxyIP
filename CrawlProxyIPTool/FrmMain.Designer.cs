@@ -49,6 +49,7 @@
             this.label4 = new System.Windows.Forms.Label();
             this.btnRun = new System.Windows.Forms.Button();
             this.timRun = new System.Windows.Forms.Timer(this.components);
+            this.btnStop = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.numCheckTimeout)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataInfo)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numTimer)).BeginInit();
@@ -289,11 +290,23 @@
             this.timRun.Interval = 60000;
             this.timRun.Tick += new System.EventHandler(this.timRun_Tick);
             // 
+            // btnStop
+            // 
+            this.btnStop.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnStop.Location = new System.Drawing.Point(558, 94);
+            this.btnStop.Name = "btnStop";
+            this.btnStop.Size = new System.Drawing.Size(109, 23);
+            this.btnStop.TabIndex = 13;
+            this.btnStop.Text = "Stop";
+            this.btnStop.UseVisualStyleBackColor = true;
+            this.btnStop.Click += new System.EventHandler(this.btnStop_Click);
+            // 
             // FrmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(679, 450);
+            this.Controls.Add(this.btnStop);
             this.Controls.Add(this.btnRun);
             this.Controls.Add(this.numTimer);
             this.Controls.Add(this.label4);
@@ -347,6 +360,7 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Button btnRun;
         private System.Windows.Forms.Timer timRun;
+        private System.Windows.Forms.Button btnStop;
     }
 }
 

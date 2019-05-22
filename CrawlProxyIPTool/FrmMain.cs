@@ -220,5 +220,9 @@ namespace CrawlProxyIPTool
             }
         }
 
+        private void btnStop_Click(object sender, EventArgs e)
+        {
+            ProxyIP.Stop();
+        }
     }
 }
