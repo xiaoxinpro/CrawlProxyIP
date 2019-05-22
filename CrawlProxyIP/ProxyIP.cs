@@ -163,10 +163,8 @@ namespace CrawlProxyIP
                 {
                     ListUrl.Add(@"http://ip.zdaye.com" + match.Value);
                 }
-                ListUrl = ListUrl.Distinct().ToList(); //出重
-                //Match matchURL = Regex.Match(result.Html, @"/dayProxy/ip/\d+\.html");
-                //Console.WriteLine(@"http://ip.zdaye.com" + matchURL.Value);
-                //item.URL = @"http://ip.zdaye.com" + matchURL.Value;
+                ListUrl = ListUrl.Distinct().ToList(); //URL去重
+                List<string> ListIP = new List<string>(); //记录获取的全部IP用于去重
                 foreach (string itemUrl in ListUrl)
                 {
                     Console.WriteLine("开始爬取" + itemUrl);
@@ -181,9 +179,13 @@ namespace CrawlProxyIP
                     MatchCollection matches = Regex.Matches(result.Html, @"(\d{1,3}\.){3}\d{1,3}\:\d{1,5}");
                     foreach (Match match in matches)
                     {
-                        QueueGetIP.Enqueue(match.Value);
+                        if (!ListIP.Contains(match.Value))
+                        {
+                            QueueGetIP.Enqueue(match.Value);
+                            ListIP.Add(match.Value);
+                        }
                     }
-                    Console.WriteLine("zdaye获取到" + matches.Count + "个IP地址，开始校验...");
+                    Console.WriteLine("zdaye获取到" + QueueGetIP.Count + "个IP地址，开始校验...");
                     TaskRunCheckIP();
                 }
                 Watch.Stop();
