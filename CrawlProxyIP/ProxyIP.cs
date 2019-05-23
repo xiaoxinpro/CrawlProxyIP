@@ -89,11 +89,10 @@ namespace CrawlProxyIP
                 HttpHelper Http = new HttpHelper();
                 HttpItem Item = new HttpItem()
                 {
-                    URL = "http://10.0.0.7:8899/api/v1/proxies?limit=100&https=true",
+                    URL = "http://nas.xxvpn.top:8899/api/v1/proxies?limit=100&https=true",
                     Method = "get",
                 };
                 HttpResult result = Http.GetHtml(Item);
-                strTest = result.Html;
                 MatchCollection matches = Regex.Matches(result.Html, @"(\d{1,3}\.){3}\d{1,3}\D+\d{1,5}");
                 foreach (Match match in matches)
                 {
@@ -126,7 +125,6 @@ namespace CrawlProxyIP
                     Method = "get",
                 };
                 HttpResult result = Http.GetHtml(Item);
-                strTest = result.Html;
                 MatchCollection matches = Regex.Matches(result.Html, @"(\d{1,3}\.){3}\d{1,3}\D+\d{1,5}");
                 foreach (Match match in matches)
                 {
