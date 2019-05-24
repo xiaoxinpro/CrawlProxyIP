@@ -288,6 +288,8 @@ namespace CrawlProxyIP
                         }
                         else
                         {
+                            matchs = Regex.Matches(checkResult.Html, @"cname\""[^\""]*\""[^\""]*");
+                            string cname = Regex.Replace(matchs[0].Value, @"cname\""[^\""]*\""", "");
                             ListProxyIP.Add(dataIP);
                             QueueCheckIP.Enqueue(dataIP);
                             EventGetIPing?.Invoke(dataIP);
